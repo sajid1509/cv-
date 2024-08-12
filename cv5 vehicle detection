@@ -1,0 +1,23 @@
+import cv2
+import time     #3rd Vehcile detection
+import numpy as np
+from google.colab.patches import cv2_imshow
+car_classifier = cv2.CascadeClassifier('haarcascade_car.xml')
+cap = cv2.VideoCapture('cars.gif')
+if not cap.isOpened():
+    print("Error opening video file. Check the file path and ensure it's not corrupted.")
+else:
+    while cap.isOpened():
+        time.sleep(.05)
+        ret, frame = cap.read()
+        if not ret:
+            break
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cars = car_classifier.detectMultiScale(gray, 1.4, 2)
+        for (x,y,w,h) in cars:
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 255), 2)
+            cv2_imshow(frame)
+        if cv2.waitKey(1) == 13:
+            break
+cap.release()
+cv2.destroyAllWindows()
