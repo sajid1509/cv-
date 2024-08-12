@@ -1,0 +1,9 @@
+###pip install deepface
+import cv2                              #9 emotion recognition
+import matplotlib.pyplot as plt
+from deepface import DeepFace
+img = cv2.imread('5896.jpeg')
+plt.imshow(img[:, :, : : -1])
+plt.show()
+result = DeepFace.analyze(img, actions = ['emotion'])
+print(result)
