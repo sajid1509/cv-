@@ -1,0 +1,14 @@
+##pip install pyzbar                #7 QR code scanner
+!apt-get install libzbar-dev
+import cv2
+from pyzbar.pyzbar import decode
+from google.colab.patches import cv2_imshow
+import numpy as np
+frame = cv2.imread('qr.png')
+if frame is not None:
+ for qr in decode(frame):
+  cv2.polylines(frame, [np.array(qr.polygon, dtype=np.int32)], True, (255, 0, 0), 3)
+  print("QR Code detected: ", qr.data.decode('utf-8'))
+ cv2_imshow(frame)
+ cv2.waitKey(0)
+ cv2.destroyAllWindows()
