@@ -1,0 +1,13 @@
+from transformers import BlipProcessor, BlipForConditionalGeneration                 #5 image captioning
+from PIL import Image
+import matplotlib.pyplot as plt
+image_path = 'car.jpg' # Replace with your local image path
+image = Image.open(image_path).convert("RGB")
+processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
+inputs = processor(images=image, return_tensors="pt")
+caption = processor.decode(model.generate(**inputs)[0], skip_special_tokens=True)
+plt.imshow(image)
+plt.title(caption)
+plt.axis('off')
+plt.show()
