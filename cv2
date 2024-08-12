@@ -1,0 +1,19 @@
+import cv2    #2nd 2D to 3D convertion
+import numpy as np
+img=cv2.imread('cube1.jpg',cv2.IMREAD_UNCHANGED)
+dep=cv2.imread('cube2.jpg',cv2.IMREAD_GRAYSCALE)
+delta=(dep/255.0 *10).astype(int)
+arr=np.zeros_like(img)
+for y in range(img.shape[0]):
+  for x in range(img.shape[1]):
+    dx=delta[y,x]
+    if 0<= x+dx <img.shape[1]:
+      arr[y,x+dx]=img[y,x]
+cv2_imshow(arr)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+#from google.colab import drive
+#drive.mount('/content/drive')
