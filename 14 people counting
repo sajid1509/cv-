@@ -1,0 +1,22 @@
+import cv2
+from google.colab.patches import cv2_imshow
+import numpy as np
+import time
+cls=cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fullbody.xml')
+cap=cv2.VideoCapture("peoplebg.mp4")
+ct=0
+while cap.isOpened():
+  time.sleep(0.05)
+  ret,frame=cap.read()
+  if not ret:
+    break
+  gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+  class2=cls.detectMultiScale(gray,1.1,3)
+  for (x,y,w,h) in class2:
+    cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),3)
+    ct+=1
+  cv2_imshow(frame)
+  print(ct)
+  ct=0
+cap.release()
+cv2.destroyAllWindows()
